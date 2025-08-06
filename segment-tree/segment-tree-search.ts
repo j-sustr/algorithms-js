@@ -4,7 +4,7 @@ export interface SegmentTreeNode {
   includesTarget(): boolean;
 }
 
-export function* segmentTreeSearch(root: SegmentTreeNode) {
+export function* findTargetSegment(root: SegmentTreeNode) {
   if (!root.includesTarget()) {
     return;
   }

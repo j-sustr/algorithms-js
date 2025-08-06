@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { segmentTreeSearch, SegmentTreeNode } from './segment-tree-search'; // Adjust the import path as needed
+import { findTargetSegment, SegmentTreeNode } from './segment-tree-search'; // Adjust the import path as needed
 
 class MockSegmentTreeNode implements SegmentTreeNode {
   value: string;
@@ -36,7 +36,7 @@ describe('segmentTreeSearch', () => {
     const child3 = new MockSegmentTreeNode('child3', [], false);
     const root = new MockSegmentTreeNode('root', [child1, child2, child3], false);
 
-    const result = [...segmentTreeSearch(root)];
+    const result = [...findTargetSegment(root)];
     expect(result).toEqual([1]); // Expecting index 1 (child2)
   });
 
@@ -53,7 +53,7 @@ describe('segmentTreeSearch', () => {
 
     const root = new MockSegmentTreeNode('root', [child1, child2, child3], false);
 
-    const result = [...segmentTreeSearch(root)];
+    const result = [...findTargetSegment(root)];
     expect(result).toEqual([1, 1]); // Expecting index 1 (child2), then index 1 (grandChild2)
   });
 
@@ -63,7 +63,7 @@ describe('segmentTreeSearch', () => {
     const child2 = new MockSegmentTreeNode('child2', [], false);
     const root = new MockSegmentTreeNode('root', [child1, child2], false);
 
-    const result = [...segmentTreeSearch(root)];
+    const result = [...findTargetSegment(root)];
     expect(result).toEqual([]);
   });
 
@@ -73,20 +73,20 @@ describe('segmentTreeSearch', () => {
     const child2 = new MockSegmentTreeNode('child2', [], true); // Both child1 and child2 include target
     const root = new MockSegmentTreeNode('root', [child1, child2], false);
 
-    expect(() => [...segmentTreeSearch(root)]).toThrowError('more than one child includes target');
+    expect(() => [...findTargetSegment(root)]).toThrowError('more than one child includes target');
   });
 
   // Test case 5: Empty tree (root has no children)
   it('should yield nothing if the root node has no children', () => {
     const root = new MockSegmentTreeNode('root', [], false);
-    const result = [...segmentTreeSearch(root)];
+    const result = [...findTargetSegment(root)];
     expect(result).toEqual([]);
   });
 
   // Test case 6: Target at root, but root has no children
   it('should yield nothing if the root includes target but has no children', () => {
     const root = new MockSegmentTreeNode('root', [], true); // Root itself includes target
-    const result = [...segmentTreeSearch(root)];
+    const result = [...findTargetSegment(root)];
     expect(result).toEqual([]); // The generator only yields child indices
   });
 
@@ -106,7 +106,7 @@ describe('segmentTreeSearch', () => {
 
     const root = new MockSegmentTreeNode('root', [n1c1, n1c2, n1c3], false);
 
-    const result = [...segmentTreeSearch(root)];
+    const result = [...findTargetSegment(root)];
     expect(result).toEqual([1, 1, 1]);
   });
 
@@ -115,7 +115,7 @@ describe('segmentTreeSearch', () => {
     const child1 = new MockSegmentTreeNode('child1', [], true);
     const root = new MockSegmentTreeNode('root', [child1], false);
 
-    const result = [...segmentTreeSearch(root)];
+    const result = [...findTargetSegment(root)];
     expect(result).toEqual([0]);
   });
 
@@ -129,7 +129,7 @@ describe('segmentTreeSearch', () => {
     const childNodeAtSpy = vi.spyOn(root, 'childNodeAt');
     const child2IncludesTargetSpy = vi.spyOn(child2, 'includesTarget');
 
-    [...segmentTreeSearch(root)];
+    [...findTargetSegment(root)];
 
     expect(childNodeAtSpy).toHaveBeenCalledWith(0);
     expect(childNodeAtSpy).toHaveBeenCalledWith(1);
