@@ -28,13 +28,13 @@ test('binarySearch returns correct index for last element', () => {
   expect(binarySearch(compareFn, arr.length)).toBe(4);
 });
 
-test('binarySearch handles element not found', () => {
+test('binarySearch handles non existing target value', () => {
   const arr = [10, 20, 30, 40, 50];
   const compareFn = (idx) => {
     if (arr[idx] === 25) return 0;
     return arr[idx] < 25 ? 1 : -1;
   };
-  expect(binarySearch(compareFn, arr.length)).toBe(-1);
+  expect(binarySearch(compareFn, arr.length)).toBe(1);
 });
 
 test('binarySearch works with a single element array (found)', () => {
@@ -61,15 +61,6 @@ test('binarySearch handles empty search space (length 0)', () => {
   expect(binarySearch(compareFn, 0)).toBe(-1);
 });
 
-test('binarySearch uses startIdx correctly', () => {
-  const arr = [5, 10, 15, 20, 25, 30, 35];
-  const compareFn = (idx) => {
-    if (arr[idx] === 25) return 0;
-    return arr[idx] < 25 ? 1 : -1;
-  };
-  expect(binarySearch(compareFn, 4, 3)).toBe(4);
-});
-
 test('binarySearch returns -1 if target is smaller than all elements', () => {
   const arr = [10, 20, 30];
   const compareFn = (idx) => {
@@ -79,11 +70,11 @@ test('binarySearch returns -1 if target is smaller than all elements', () => {
   expect(binarySearch(compareFn, arr.length)).toBe(-1);
 });
 
-test('binarySearch returns -1 if target is larger than all elements', () => {
+test('binarySearch returns last element index if target is larger than all elements', () => {
   const arr = [10, 20, 30];
   const compareFn = (idx) => {
     if (arr[idx] === 35) return 0;
     return arr[idx] < 35 ? 1 : -1;
   };
-  expect(binarySearch(compareFn, arr.length)).toBe(-1);
+  expect(binarySearch(compareFn, arr.length)).toBe(2);
 });

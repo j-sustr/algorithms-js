@@ -1,9 +1,9 @@
 
 
-export function binarySearch(compareFn: (idx: any) => number, length: number, startIdx = 0) {
+export function binarySearch(compareFn: (idx: any) => number, length: number) {
     let prevLeft = -1;
-    let left = startIdx;
-    let right = startIdx + length;
+    let left = 0;
+    let right = length;
     let compareResult = 0;
     
     while (left < right) {
@@ -24,5 +24,8 @@ export function binarySearch(compareFn: (idx: any) => number, length: number, st
         }
     }
 
+    if (left === 0) {
+        return -1;
+    }
     return compareResult;
 }
