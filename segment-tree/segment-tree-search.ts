@@ -5,9 +5,11 @@ export interface SegmentTreeNode<T> {
   includesTarget(): boolean;
 }
 
-export function* segmentTreeSearch<T>(
-  root: SegmentTreeNode<T>
-) {
+export function* segmentTreeSearch<T>(root: SegmentTreeNode<T>) {
+  if (!root.includesTarget()) {
+    return;
+  }
+
   let node = root;
   let parentNode: SegmentTreeNode<T> | null = null;
   let childNodeCount = node.childNodeCount;
