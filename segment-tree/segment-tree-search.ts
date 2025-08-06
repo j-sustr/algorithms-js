@@ -7,37 +7,37 @@ export interface SegmentTreeNode<T> {
 
 export function* segmentTreeSearch<T>(
   root: SegmentTreeNode<T>
-): Iterable<SegmentTreeNode<T>> {
+) {
   let node = root;
   let parentNode: SegmentTreeNode<T> | null = null;
-  let childNodeWithTarget: SegmentTreeNode<T> | null = null;
   let childNodeCount = node.childNodeCount;
+  let childNodeWithTargetIndex = -1;
 
   for (let level = 0; childNodeCount > 0; level++) {
-    childNodeWithTarget = null;
+    childNodeWithTargetIndex = -1;
 
     for (let i = 0; i < childNodeCount; i++) {
       if (node.childNodeAt(i).includesTarget()) {
-        if (childNodeWithTarget) {
+        if (childNodeWithTargetIndex !== -1) {
           throw new Error("more than one child includes target", {
             cause: {
               level,
             },
           });
         }
-        
-        childNodeWithTarget = node;
+
+        childNodeWithTargetIndex = i;
       }
     }
 
-    if (!childNodeWithTarget) {
+    if (childNodeWithTargetIndex === -1) {
       return;
     }
 
-    yield childNodeWithTarget;
+    yield childNodeWithTargetIndex;
 
     parentNode = node;
-    node = childNodeWithTarget;
+    node = node.childNodeAt(childNodeWithTargetIndex);
     childNodeCount = node.childNodeCount;
   }
 }
