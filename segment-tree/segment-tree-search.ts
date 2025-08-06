@@ -1,17 +1,16 @@
-export interface SegmentTreeNode<T> {
-  value: T;
+export interface SegmentTreeNode {
   childNodeCount: number;
-  childNodeAt(index: number): SegmentTreeNode<T>;
+  childNodeAt(index: number): SegmentTreeNode;
   includesTarget(): boolean;
 }
 
-export function* segmentTreeSearch<T>(root: SegmentTreeNode<T>) {
+export function* segmentTreeSearch(root: SegmentTreeNode) {
   if (!root.includesTarget()) {
     return;
   }
 
   let node = root;
-  let parentNode: SegmentTreeNode<T> | null = null;
+  let parentNode: SegmentTreeNode | null = null;
   let childNodeCount = node.childNodeCount;
   let childNodeWithTargetIndex = -1;
 

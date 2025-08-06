@@ -1,13 +1,12 @@
 import { describe, it, expect, vi } from 'vitest';
 import { segmentTreeSearch, SegmentTreeNode } from './segment-tree-search'; // Adjust the import path as needed
 
-// Mock implementation of SegmentTreeNode for testing
-class MockSegmentTreeNode<T> implements SegmentTreeNode<T> {
-  value: T;
-  children: MockSegmentTreeNode<T>[];
+class MockSegmentTreeNode implements SegmentTreeNode {
+  value: string;
+  children: MockSegmentTreeNode[];
   targetIncluded: boolean;
 
-  constructor(value: T, children: MockSegmentTreeNode<T>[] = [], includesTarget: boolean = false) {
+  constructor(value: string, children: MockSegmentTreeNode[] = [], includesTarget: boolean = false) {
     this.value = value;
     this.children = children;
     this.targetIncluded = includesTarget;
@@ -17,7 +16,7 @@ class MockSegmentTreeNode<T> implements SegmentTreeNode<T> {
     return this.children.length;
   }
 
-  childNodeAt(index: number): SegmentTreeNode<T> {
+  childNodeAt(index: number): SegmentTreeNode {
     if (index < 0 || index >= this.children.length) {
       throw new Error(`Index out of bounds: ${index}`);
     }
